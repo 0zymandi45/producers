@@ -1,0 +1,163 @@
+openapi: 3.0.0
+info:
+  title: Producers API
+  version: 1.0.0
+  description: API for managing rural producers
+servers:
+  - url: http://localhost:3000
+paths:
+  /:
+    get:
+      summary: Default route message
+      description: Displays a message indicating the API is working
+      responses:
+        200:
+          description: "It's working"
+          content:
+            text/html:
+              schema:
+                type: string
+                example: "<h1>🚀 It's working! 🚀</h1>"
+  /api/producers:
+    get:
+      summary: Retrieve all rural producers
+      tags:
+        - Producers
+      responses:
+        200:
+          description: List of all producers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    cpfCnpj:
+                      type: string
+                      example: 12345678901
+                    name:
+                      type: string
+                      example: John Doe
+                    farmName:
+                      type: string
+                      example: Farm São João
+    post:
+      summary: Create a new rural producer
+      tags:
+        - Producers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cpfCnpj:
+                  type: string
+                  example: 12345678901
+                name:
+                  type: string
+                  example: John Doe
+                farmName:
+                  type: string
+                  example: Farm São João
+                city:
+                  type: string
+                  example: São Paulo
+                state:
+                  type: string
+                  example: SP
+                totalArea:
+                  type: number
+                  example: 100
+                cultivableArea:
+                  type: number
+                  example: 70
+                vegetationArea:
+                  type: number
+                  example: 30
+                crops:
+                  type: array
+                  items:
+                    type: string
+                  example: [Soybean, Corn]
+      responses:
+        201:
+          description: Producer successfully created
+  /api/producers/{id}:
+    get:
+      summary: Retrieve a specific producer
+      tags:
+        - Producers
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Producer ID
+      responses:
+        200:
+          description: Producer details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  cpfCnpj:
+                    type: string
+                    example: 12345678901
+                  name:
+                    type: string
+                    example: John Doe
+                  farmName:
+                    type: string
+                    example: Farm São João
+    put:
+      summary: Update an existing producer
+      tags:
+        - Producers
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Producer ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: John Updated
+                farmName:
+                  type: string
+                  example: Updated Farm
+      responses:
+        200:
+          description: Producer successfully updated
+    delete:
+      summary: Delete an existing producer
+      tags:
+        - Producers
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Producer ID
+      responses:
+        204:
+          description: Producer successfully deleted
